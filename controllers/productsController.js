@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Product = require("../models/product");
+const Product = require("../models/Product");
 
 // add a product
 const newProduct = async (req, res) => {
