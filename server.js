@@ -7,14 +7,14 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const AuthController = require("./auth/AuthController");
-const User = require("./routes/User");
+const User = require("./routes/user");
 const Product = require("./routes/product");
-const contact = require("./routes/contact");
-const order = require("./routes/order");
-const notification = require("./routes/notification");
+const Contact = require("./routes/contact");
+const Order = require("./routes/order");
+const Notification = require("./routes/notification");
 const Image = require("./routes/image");
-const stripePayment = require("./routes/stripe/stripePayment");
-const stripeWebhook = require("./routes/stripe/stripeWebhook");
+const StripePayment = require("./routes/stripe/stripePayment");
+const StripeWebhook = require("./routes/stripe/stripeWebhook");
 const Notification = require("./models/Notification");
 
 const http = require("http");
@@ -48,7 +48,7 @@ app.use((req, res, next) => {
 
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/api/checkout", stripeWebhook);
+app.use("/api/checkout", StripeWebhook);
 
 // middleware
 app.use(express.json());
@@ -96,11 +96,11 @@ app.get("/", (req, res) => {
 app.use("/api/auth", AuthController);
 app.use("/api/user", User);
 app.use("/api/product", Product);
-app.use("/api/contact", contact);
-app.use("/api/order", order);
-app.use("/api/notification", notification);
+app.use("/api/contact", Contact);
+app.use("/api/order", Order);
+app.use("/api/notification", Notification);
 app.use("/api/image", Image);
-app.use("/api/checkout", stripePayment);
+app.use("/api/checkout", StripePayment);
 
 // mongo connect & DB
 mongoose
