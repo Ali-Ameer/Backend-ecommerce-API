@@ -36,7 +36,10 @@ app.use((req, res, next) => {
     'Access-Control-Allow-Headers, "*", Access-Control-Allow-Origin',
     "Origin, X-Requested-with, Content_Type,Accept,Authorization",
     process.WEBHOOK_ORIGIN,
+    process.env.ALLOWED_ORIGINS_1,
+    process.env.ALLOWED_ORIGINS_2,
     "http://localhost:8000",
+    "https://backend-ecommerce-api.onrender.com/",
     "Access-Control-Allow-Credentials: true"
   );
   if (req.method === "OPTIONS") {
@@ -45,7 +48,14 @@ app.use((req, res, next) => {
   }
   next();
 });
-
+app.use((req, res, next) => {
+  const allowedOrigins = [process.env.ALLOWED_ORIGINS_1, process.env.ALLOWED_ORIGINS_2];
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  return next();
+})
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/checkout", StripeWebhook);
