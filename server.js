@@ -15,7 +15,7 @@ const Notification = require("./routes/notification");
 const Image = require("./routes/image");
 const StripePayment = require("./routes/stripe/stripePayment");
 const StripeWebhook = require("./routes/stripe/stripeWebhook");
-const Notification = require("./models/Notification");
+const NotificationModels = require("./models/Notification");
 
 const http = require("http");
 const { Server } = require("socket.io");
@@ -76,7 +76,7 @@ io.on("connection", (socket) => {
       notification: "you have a new user click to view details",
       id: data.user._id
     };
-    Notification.create(notificationInfo)
+    NotificationModels.create(notificationInfo)
     console.log(notificationInfo);
     socket.broadcast.emit("receiveUser", notificationInfo)
   });
