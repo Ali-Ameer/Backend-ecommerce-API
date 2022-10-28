@@ -3,7 +3,8 @@ const allowedOrigins = [
     'http://localhost:3500',
     'http://localhost:8000',
     'http://localhost:3000',
-    'http://localhost:3001'
+    'http://localhost:3001',
+    'https://ecommerce-website-bice.vercel.app'
 ];
 
 module.exports = allowedOrigins;
