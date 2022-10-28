@@ -35,7 +35,7 @@ app.use((req, res, next) => {
   res.header(
     'Access-Control-Allow-Headers, "*", Access-Control-Allow-Origin',
     "Origin, X-Requested-with, Content_Type,Accept,Authorization",
-    "http://localhost:3000",
+    process.WEBHOOK_ORIGIN,
     "http://localhost:8000",
     "Access-Control-Allow-Credentials: true"
   );
@@ -60,7 +60,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "https://ecommerce-website-bice.vercel.app/",
+    origin: process.WEBHOOK_ORIGIN,
   },
 });
 
@@ -85,7 +85,7 @@ io.on("connection", (socket) => {
     console.log("socket: a user disconnected");
   });
 });
-server.listen(3500);
+server.listen(process.SERVER_WEBHOOK_PORT);
 
 //Route to the homepage of the application
 app.get("/", (req, res) => {
