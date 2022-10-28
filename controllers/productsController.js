@@ -40,7 +40,7 @@ const getProducts = async (req, res) => {
   }
 };
 
-// Get a single product
+// Get a one product
 const getProduct = async (req, res) => {
   const { id } = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) {
