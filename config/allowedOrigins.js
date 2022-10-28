@@ -1,10 +1,9 @@
 const allowedOrigins = [
-    'http://127.0.0.1:5500',
-    'http://localhost:3500',
-    'http://localhost:8000',
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'https://ecommerce-website-bice.vercel.app'
+    process.env.ALLOWED_ORIGINS_1,
+    process.env.ALLOWED_ORIGINS_2,
+    process.env.ALLOWED_ORIGINS_3,
+    process.env.ALLOWED_ORIGINS_4,
+    process.env.ALLOWED_ORIGINS_5
 ];
 
 module.exports = allowedOrigins;
