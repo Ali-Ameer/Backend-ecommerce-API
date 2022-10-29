@@ -17,62 +17,35 @@ const StripePayment = require("./routes/stripe/stripePayment");
 const StripeWebhook = require("./routes/stripe/stripeWebhook");
 const NotificationModels = require("./models/Notification");
 
-const http = require("http");
-const { Server } = require("socket.io");
-
 // express app
 const app = express();
+
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+
+// const io = new Server(server, {
+//   cors: {
+//     origin: "http://localhost:3000/",
+//   },
+// });
 
 app.use(cookieParser());
 
 // Handle options credentials check - before CORS!
 // and fetch cookies credentials requirement
 app.use(credentials);
+app.use(cors(corsOptions));;
 
-app.use(cors(corsOptions));
-
-app.use((req, res, next) => {
-  res.header(
-    'Access-Control-Allow-Headers, "*", Access-Control-Allow-Origin',
-    "Origin, X-Requested-with, Content_Type,Accept,Authorization",
-    process.WEBHOOK_ORIGIN,
-    process.env.ALLOWED_ORIGINS_1,
-    process.env.ALLOWED_ORIGINS_2,
-    "http://localhost:8000",
-    "https://backend-ecommerce-api.onrender.com/",
-    "Access-Control-Allow-Credentials: true"
-  );
-  if (req.method === "OPTIONS") {
-    res.header("Access-Control-Allow-Methods", "PUT,POST,PATCH,DELETE,GET");
-    return res.status(200).json({});
-  }
-  next();
-});
-app.use((req, res, next) => {
-  const allowedOrigins = [process.env.ALLOWED_ORIGINS_1, process.env.ALLOWED_ORIGINS_2];
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  }
-  return next();
-})
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/checkout", StripeWebhook);
 
 // middleware
 app.use(express.json());
-//enables us to host static CSS & JS files.
-//The public folder contains the CSS & JS files.
+//enables us to host static CSS & JS files, public folder contains the CSS & JS files.
 app.use(express.static("public"));
-
-const server = http.createServer(app);
-
-const io = new Server(server, {
-  cors: {
-    origin: process.WEBHOOK_ORIGIN,
-  },
-});
 
 //Add this before the app.get() block
 io.on("connection", (socket) => {
@@ -95,7 +68,7 @@ io.on("connection", (socket) => {
     console.log("socket: a user disconnected");
   });
 });
-server.listen(process.SERVER_WEBHOOK_PORT);
+// server.listen(process.SERVER_WEBHOOK_PORT);
 
 //Route to the homepage of the application
 app.get("/", (req, res) => {

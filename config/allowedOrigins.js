@@ -1,9 +1,8 @@
 const allowedOrigins = [
-    process.env.ALLOWED_ORIGINS_1,
-    process.env.ALLOWED_ORIGINS_2,
-    process.env.ALLOWED_ORIGINS_3,
-    process.env.ALLOWED_ORIGINS_4,
-    process.env.ALLOWED_ORIGINS_5
+    "https://ecommerce-react-website.onrender.com",
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://127.0.0.1:5500"
 ];
 
 module.exports = allowedOrigins;
